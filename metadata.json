@@ -1,0 +1,6 @@
+{
+  "name": "CalorieMax",
+  "description": "An AI-powered high-calorie food finder and daily intake tracker for weight gain and fitness goals.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": []
+}

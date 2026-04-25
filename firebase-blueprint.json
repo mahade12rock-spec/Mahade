@@ -1,0 +1,77 @@
+{
+  "entities": {
+    "PersonalDetails": {
+      "title": "Personal Details",
+      "description": "User's physical metrics and goals",
+      "type": "object",
+      "properties": {
+        "weight": { "type": "number" },
+        "height": { "type": "number" },
+        "age": { "type": "number" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "activityLevel": { "type": "string", "enum": ["sedentary", "light", "moderate", "active", "very_active"] },
+        "bulkIntensity": { "type": "string", "enum": ["clean", "standard", "aggressive"] }
+      },
+      "required": ["weight", "height", "age", "gender", "activityLevel", "bulkIntensity"]
+    },
+    "Recipe": {
+      "title": "Recipe",
+      "description": "A high-calorie recipe generated for the user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "calories": { "type": "number" },
+        "protein": { "type": "number" },
+        "carbs": { "type": "number" },
+        "fats": { "type": "number" },
+        "ingredients": { "type": "array", "items": { "type": "string" } },
+        "instructions": { "type": "array", "items": { "type": "string" } },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string" }
+      },
+      "required": ["name", "calories", "protein", "carbs", "fats", "ingredients", "instructions", "description"]
+    },
+    "User": {
+      "title": "User",
+      "description": "User profile and settings",
+      "type": "object",
+      "properties": {
+        "dailyGoal": { "type": "number", "description": "Goal calories per day" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "personalDetails": { "$ref": "PersonalDetails" }
+      },
+      "required": ["dailyGoal", "email"]
+    },
+    "FoodLog": {
+      "title": "Food Log",
+      "description": "A food item logged by the user",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "calories": { "type": "number" },
+        "protein": { "type": "number" },
+        "carbs": { "type": "number" },
+        "fats": { "type": "number" },
+        "timestamp": { "type": "number" },
+        "userId": { "type": "string" }
+      },
+      "required": ["name", "calories", "protein", "carbs", "fats", "timestamp", "userId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Stores user settings"
+    },
+    "/users/{userId}/logs/{logId}": {
+      "schema": "FoodLog",
+      "description": "Stores food consumption logs"
+    },
+    "/users/{userId}/recipes/{recipeId}": {
+      "schema": "Recipe",
+      "description": "Stores generated high-calorie recipes"
+    }
+  }
+}
